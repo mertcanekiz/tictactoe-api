@@ -38,15 +38,6 @@ namespace TicTacToe
             var mongoClient = new MongoClient("mongodb://localhost:27017");
             var context = new Context(mongoClient, "tictactoe");
             
-            BsonClassMap.RegisterClassMap<Feature>(cm => {
-                cm.AutoMap();
-                cm.SetIsRootClass(true);
-            
-                var featureType = typeof(Feature);
-                featureType.Assembly.GetTypes()
-                    .Where(type => featureType.IsAssignableFrom(type)).ToList()
-                    .ForEach(type => cm.AddKnownType(type));
-            });
             services.AddSingleton<IContext, Context>(_ => context);
             services.AddSingleton<IRepository<Game>, Repository<Game>>();
             
