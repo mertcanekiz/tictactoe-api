@@ -92,18 +92,25 @@ namespace TicTacToe.Services
             newStates.AddRange(game.States);
             newStates.Add(newState);
 
-            _repository.UpdateOne(x => x.Id.Equals(gameId), (game => game.States, newStates));
-
+            var winner = game.Winner;
+            var isWon = game.IsWon;
             foreach (var winChecker in game.WinConditionCheckers)
             {
+                _logger.LogInformation($"Checking win condition: {winChecker.Name}");
                 var pieceType = winChecker.CheckWinningPieceType(board);
                 if (pieceType != PieceType.Empty)
                 {
-                    game.IsWon = true;
-                    game.Winner = pieceType;
+                    _logger.LogInformation($"Piece {pieceType} won due to {winChecker.Name} win condition");
+                    isWon = true;
+                    winner = pieceType;
                     break;
                 }
             }
+            
+            _repository.UpdateOne(x => x.Id.Equals(gameId), 
+                (game => game.States, newStates),
+                (game => game.Winner, winner),
+                (game => game.IsWon, isWon));
 
             return newState;
         }
