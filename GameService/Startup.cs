@@ -61,7 +61,6 @@ namespace TicTacToe
             services.AddSingleton<IRepository<User>, Repository<User>>();
             services.AddSingleton<IGameService, GameService>();
             services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<IBoardFactory, EmptyBoardFactory>();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "GameService", Version = "v1"}); });
         }
 

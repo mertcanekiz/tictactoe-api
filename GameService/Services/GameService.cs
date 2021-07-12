@@ -6,6 +6,7 @@ using Core.Mongo.Repository;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using TicTacToe.Factory;
+using TicTacToe.Factory.Board;
 using TicTacToe.Models.DTO.Request;
 using TicTacToe.Models.Game;
 
@@ -15,24 +16,29 @@ namespace TicTacToe.Services
     {
         private readonly IRepository<Game> _repository;
         private readonly ILogger<GameService> _logger;
-        private readonly IBoardFactory _boardFactory;
 
-        public GameService(IRepository<Game> repository, ILogger<GameService> logger, IBoardFactory boardFactory)
+        public GameService(IRepository<Game> repository, ILogger<GameService> logger)
         {
             _repository = repository;
             _logger = logger;
-            _boardFactory = boardFactory;
         }
 
         public Guid CreateGame(CreateGameRequestDto dto, Guid userId)
         {
             var winConditionCheckers = dto.WinConditionCheckers
                 .Select(WinConditionChecker.GetWinConditionCheckerByName).ToList();
-            _logger.LogInformation(JsonConvert.SerializeObject(winConditionCheckers));
+            var boardFactory = BoardFactory.GetBoardFactoryByName(dto.BoardFactory);
             var game = new Game()
             {
                 CreatedBy = userId,
-                States = new List<GameState>(),
+                States = new List<GameState>()
+                {
+                    new()
+                    {
+                        Board = boardFactory.CreateBoard(),
+                        MoveNumber = 0
+                    }
+                },
                 IsWon = false,
                 WinConditionCheckers = winConditionCheckers
             };
@@ -47,15 +53,7 @@ namespace TicTacToe.Services
             if (game == null)
                 throw new Exception($"Game with id {gameId} not found");
             
-            var prevState = game.States.LastOrDefault();
-            if (prevState == null)
-            {
-                prevState = new GameState()
-                {
-                    Board = _boardFactory.CreateBoard(),
-                    MoveNumber = 0
-                };
-            }
+            var prevState = game.States.Last();
             var board = new Board()
             {
                 Tiles = prevState.Board.Tiles.Select(a => a.ToArray()).ToArray()

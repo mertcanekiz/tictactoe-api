@@ -1,10 +1,10 @@
 ﻿using TicTacToe.Models.Game;
 
-namespace TicTacToe.Factory
+namespace TicTacToe.Factory.Board
 {
-    public class EmptyBoardFactory : IBoardFactory
+    public class EmptyBoardFactory : BoardFactory
     {
-        public Board CreateBoard()
+        public override Models.Game.Board CreateBoard()
         {
             PieceType[][] tiles = new[]
             {
@@ -27,10 +27,12 @@ namespace TicTacToe.Factory
                     PieceType.Empty
                 },
             };
-            return new Board()
+            return new Models.Game.Board()
             {
                 Tiles = tiles
             };
         }
+
+        public override string Name { get; set; } = "empty";
     }
 }
