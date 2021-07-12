@@ -44,6 +44,6 @@ namespace TicTacToe.Factory.Board
             };
         }
 
-        public override string Name { get; set; } = "random";
+        protected override string Name => "random";
     }
 }

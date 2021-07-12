@@ -9,21 +9,21 @@ namespace TicTacToe.Factory.Board
     public abstract class BoardFactory
     {
         public abstract Domain.Game.Board CreateBoard();
-        public abstract string Name { get; set; }
+        protected abstract string Name { get; }
 
-        private static Dictionary<string, BoardFactory> _boardFactories = new();
-        public static BoardFactory Empty = new EmptyBoardFactory();
-        public static BoardFactory Random = new RandomBoardFactory();
+        private static readonly Dictionary<string, BoardFactory> BoardFactories = new();
+        public static readonly BoardFactory Empty = new EmptyBoardFactory();
+        public static readonly BoardFactory Random = new RandomBoardFactory();
 
         static BoardFactory()
         {
-            _boardFactories.Add(Empty.Name, Empty);
-            _boardFactories.Add(Random.Name, Random);
+            BoardFactories.Add(Empty.Name, Empty);
+            BoardFactories.Add(Random.Name, Random);
         }
 
         public static BoardFactory GetBoardFactoryByName(string name)
         {
-            _boardFactories.TryGetValue(name, out var boardFactory);
+            BoardFactories.TryGetValue(name, out var boardFactory);
             return boardFactory;
         }
     }
