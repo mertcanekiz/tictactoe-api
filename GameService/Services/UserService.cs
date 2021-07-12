@@ -6,9 +6,9 @@ using System.Text;
 using Core.Mongo.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using TicTacToe.Domain.DTO.Request;
+using TicTacToe.Domain.User;
 using TicTacToe.Exceptions;
-using TicTacToe.Models.DTO.Request;
-using TicTacToe.Models.User;
 
 namespace TicTacToe.Services
 {

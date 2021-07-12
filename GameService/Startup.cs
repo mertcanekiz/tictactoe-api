@@ -12,9 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using TicTacToe.Domain.Game;
+using TicTacToe.Domain.User;
 using TicTacToe.Factory;
-using TicTacToe.Models.Game;
-using TicTacToe.Models.User;
 using TicTacToe.Services;
 
 namespace TicTacToe

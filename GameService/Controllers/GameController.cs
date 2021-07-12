@@ -5,9 +5,9 @@ using Core.Mongo.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TicTacToe.Models.DTO.Request;
-using TicTacToe.Models.DTO.Response;
-using TicTacToe.Models.Game;
+using TicTacToe.Domain.DTO.Request;
+using TicTacToe.Domain.DTO.Response;
+using TicTacToe.Domain.Game;
 using TicTacToe.Services;
 
 namespace TicTacToe.Controllers

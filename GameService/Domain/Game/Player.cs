@@ -1,7 +1,7 @@
 ﻿using System;
 using Core.Mongo;
 
-namespace TicTacToe.Models.Game
+namespace TicTacToe.Domain.Game
 {
     public class Player : Document
     {

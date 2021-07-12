@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TicTacToe.Models.Game;
+using TicTacToe.Domain.Game;
 
-namespace TicTacToe.Models.DTO.Response
+namespace TicTacToe.Domain.DTO.Response
 {
-    public class GameStateResponseModel
+    public class MoveResponseModel
     {
         public string[] Board { get; set; }
         public int MoveNumber { get; set; }
@@ -12,9 +12,10 @@ namespace TicTacToe.Models.DTO.Response
     
     public class GameResponseDto : DocumentResponseDto
     {
-        public List<GameStateResponseModel> States { get; set; }
+        public List<MoveResponseModel> Moves { get; set; }
         public bool IsWon { get; set; }
         public PieceType? Winner { get; set; }
+        public string State { get; set; }
 
         private string[] BoardLineRepresentation(PieceType[][] tiles)
         {
@@ -44,13 +45,14 @@ namespace TicTacToe.Models.DTO.Response
             CreatedAt = game.CreatedAt;
             UpdatedAt = game.UpdatedAt;
             DeletedAt = game.DeletedAt;
-            States = game.States.Select(x => new GameStateResponseModel()
+            Moves = game.Moves.Select(x => new MoveResponseModel()
             {
                 Board = BoardLineRepresentation(x.Board.Tiles),
                 MoveNumber = x.MoveNumber
             }).ToList();
             IsWon = game.IsWon;
             Winner = game.Winner;
+            State = game.State.Name;
         }
     }
 }

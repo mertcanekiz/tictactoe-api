@@ -1,10 +1,9 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using Core.Exceptions;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace TicTacToe.Models.Game
+namespace TicTacToe.Domain.Game
 {
     [BsonDiscriminator(Required = true)]
     [BsonKnownTypes(typeof(HorizontalWinConditionChecker))]

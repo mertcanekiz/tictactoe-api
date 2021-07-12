@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using TicTacToe.Models.DTO.Request;
-using TicTacToe.Models.User;
+using TicTacToe.Domain.DTO.Request;
+using TicTacToe.Domain.User;
 
 namespace TicTacToe.Services
 {

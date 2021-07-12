@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TicTacToe.Models.DTO.Request;
-using TicTacToe.Models.DTO.Response;
+using TicTacToe.Domain.DTO.Request;
+using TicTacToe.Domain.DTO.Response;
 using TicTacToe.Services;
 
 namespace TicTacToe.Controllers

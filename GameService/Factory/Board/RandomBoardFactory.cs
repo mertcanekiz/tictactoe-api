@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TicTacToe.Models.Game;
+using TicTacToe.Domain.Game;
 
 namespace TicTacToe.Factory.Board
 {
@@ -15,7 +15,7 @@ namespace TicTacToe.Factory.Board
                 return PieceType.X;
             return PieceType.O;
         }
-        public override Models.Game.Board CreateBoard()
+        public override Domain.Game.Board CreateBoard()
         {
             PieceType[][] tiles = new[]
             {
@@ -38,7 +38,7 @@ namespace TicTacToe.Factory.Board
                     GetRandomPieceType()
                 },
             };
-            return new Models.Game.Board()
+            return new Domain.Game.Board()
             {
                 Tiles = tiles
             };

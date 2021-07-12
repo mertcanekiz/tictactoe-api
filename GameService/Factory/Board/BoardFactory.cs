@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
-using TicTacToe.Models.Game;
 
 namespace TicTacToe.Factory.Board
 {
@@ -9,7 +8,7 @@ namespace TicTacToe.Factory.Board
     [BsonKnownTypes(typeof(RandomBoardFactory))]
     public abstract class BoardFactory
     {
-        public abstract Models.Game.Board CreateBoard();
+        public abstract Domain.Game.Board CreateBoard();
         public abstract string Name { get; set; }
 
         private static Dictionary<string, BoardFactory> _boardFactories = new();

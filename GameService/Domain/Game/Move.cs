@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 
-namespace TicTacToe.Models.Game
+namespace TicTacToe.Domain.Game
 {
-    public class GameState
+    public class Move
     {
         public Board Board { get; set; }
         public int MoveNumber { get; set; }
 
-        public GameState DeepClone()
+        public Move DeepClone()
         {
-            var clone = (GameState)MemberwiseClone();
+            var clone = (Move)MemberwiseClone();
             clone.Board.Tiles = Board.Tiles.Select(a => a.ToArray()).ToArray();
             return clone;
         }

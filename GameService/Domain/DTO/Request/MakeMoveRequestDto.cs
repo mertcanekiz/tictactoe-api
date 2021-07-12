@@ -1,4 +1,4 @@
-﻿namespace TicTacToe.Models.DTO.Request
+﻿namespace TicTacToe.Domain.DTO.Request
 {
     public class MakeMoveRequestDto
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TicTacToe.Models.DTO.Response
+namespace TicTacToe.Domain.DTO.Response
 {
     public class DocumentResponseDto
     {

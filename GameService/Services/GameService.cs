@@ -5,10 +5,12 @@ using System.Security.Claims;
 using Core.Mongo.Repository;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using TicTacToe.Domain.DTO.Request;
+using TicTacToe.Domain.Game;
+using TicTacToe.Domain.Game.States;
+using TicTacToe.Exceptions;
 using TicTacToe.Factory;
 using TicTacToe.Factory.Board;
-using TicTacToe.Models.DTO.Request;
-using TicTacToe.Models.Game;
 
 namespace TicTacToe.Services
 {
@@ -31,7 +33,7 @@ namespace TicTacToe.Services
             var game = new Game()
             {
                 CreatedBy = userId,
-                States = new List<GameState>()
+                Moves = new List<Move>()
                 {
                     new()
                     {
@@ -40,57 +42,29 @@ namespace TicTacToe.Services
                     }
                 },
                 IsWon = false,
-                WinConditionCheckers = winConditionCheckers
+                WinConditionCheckers = winConditionCheckers,
+                State = GameState.GetGameStateByName(dto.InitialState)
             };
             var createdGameId = _repository.InsertOne(game);
             return createdGameId;
         }
 
-        public GameState MakeMove(Guid gameId, int x, int y, PieceType type)
+        public Move MakeMove(Guid gameId, int x, int y, PieceType type)
         {
             var game = _repository.FindById(gameId);
 
             if (game == null)
                 throw new Exception($"Game with id {gameId} not found");
             
-            var prevState = game.States.Last();
-            var board = new Board()
-            {
-                Tiles = prevState.Board.Tiles.Select(a => a.ToArray()).ToArray()
-            };
-            board.Tiles[y][x] = type;
+            game.State.MakeMove(game, x, y);
 
-            var newState = new GameState()
-            {
-                Board = board,
-                MoveNumber = prevState.MoveNumber + 1
-            };
+            _repository.UpdateOne(g => g.Id.Equals(gameId), 
+                (g => g.Moves, game.Moves),
+                (g => g.Winner, game.Winner),
+                (g => g.IsWon, game.IsWon),
+                (g => g.State, game.State));
 
-            var newStates = new List<GameState>();
-            newStates.AddRange(game.States);
-            newStates.Add(newState);
-
-            var winner = game.Winner;
-            var isWon = game.IsWon;
-            foreach (var winChecker in game.WinConditionCheckers)
-            {
-                _logger.LogInformation($"Checking win condition: {winChecker.Name}");
-                var pieceType = winChecker.CheckWinningPieceType(board);
-                if (pieceType != PieceType.Empty)
-                {
-                    _logger.LogInformation($"Piece {pieceType} won due to {winChecker.Name} win condition");
-                    isWon = true;
-                    winner = pieceType;
-                    break;
-                }
-            }
-            
-            _repository.UpdateOne(x => x.Id.Equals(gameId), 
-                (game => game.States, newStates),
-                (game => game.Winner, winner),
-                (game => game.IsWon, isWon));
-
-            return newState;
+            return game.Moves.Last();
         }
     }
 }

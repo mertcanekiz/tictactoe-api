@@ -1,10 +1,10 @@
-﻿using TicTacToe.Models.Game;
+﻿using TicTacToe.Domain.Game;
 
 namespace TicTacToe.Factory.Board
 {
     public class EmptyBoardFactory : BoardFactory
     {
-        public override Models.Game.Board CreateBoard()
+        public override Domain.Game.Board CreateBoard()
         {
             PieceType[][] tiles = new[]
             {
@@ -27,7 +27,7 @@ namespace TicTacToe.Factory.Board
                     PieceType.Empty
                 },
             };
-            return new Models.Game.Board()
+            return new Domain.Game.Board()
             {
                 Tiles = tiles
             };
