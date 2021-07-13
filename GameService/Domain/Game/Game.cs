@@ -21,7 +21,6 @@ namespace TicTacToe.Domain.Game
             foreach (var checker in WinConditionCheckers)
             {
                 condition = checker.Check(Moves.Last().Board);
-                Console.WriteLine($"{checker.Name}: IsTied={condition.IsTied}, IsWon={condition.IsWon}, Winner={condition.Winner}");
                 if (condition.IsTied && (!WinCondition?.IsWon ?? true))
                 {
                     WinCondition = condition;
