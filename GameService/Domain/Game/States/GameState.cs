@@ -29,6 +29,11 @@ namespace TicTacToe.Domain.Game.States
             return state;
         }
 
+        public static bool Any(string name)
+        {
+            return States.ContainsKey(name);
+        }
+
         public abstract string Name { get; }
         protected abstract GameState NextState { get; }
         protected abstract PieceType PieceType { get; }
@@ -53,13 +58,7 @@ namespace TicTacToe.Domain.Game.States
                 MoveNumber = previousMove.MoveNumber + 1
             });
             
-            foreach (var pieceType in game.WinConditionCheckers.Select(winChecker => winChecker.CheckWinningPieceType(board)).Where(pieceType => pieceType != PieceType.Empty))
-            {
-                game.IsWon = true;
-                game.Winner = pieceType;
-                game.State = FinishedGameState;
-                return;
-            }
+            game.CheckWinConditions();
 
             game.State = NextState;
         }

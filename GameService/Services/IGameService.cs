@@ -6,7 +6,7 @@ namespace TicTacToe.Services
 {
     public interface IGameService
     {
-        Guid CreateGame(CreateGameRequestDto dto, Guid userId);
-        Move MakeMove(Guid gameId, int x, int y, PieceType type);
+        Game CreateGame(CreateGameRequestDto dto, Guid userId);
+        Move MakeMove(Guid gameId, int x, int y);
     }
 }

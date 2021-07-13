@@ -9,7 +9,7 @@ namespace TicTacToe.Factory.Board
     public abstract class BoardFactory
     {
         public abstract Domain.Game.Board CreateBoard();
-        protected abstract string Name { get; }
+        public abstract string Name { get; }
 
         private static readonly Dictionary<string, BoardFactory> BoardFactories = new();
         public static readonly BoardFactory Empty = new EmptyBoardFactory();
@@ -25,6 +25,11 @@ namespace TicTacToe.Factory.Board
         {
             BoardFactories.TryGetValue(name, out var boardFactory);
             return boardFactory;
+        }
+
+        public static bool Any(string name)
+        {
+            return BoardFactories.ContainsKey(name);
         }
     }
 }

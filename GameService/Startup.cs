@@ -2,6 +2,7 @@ using System.Text;
 using Core.Exceptions;
 using Core.Mongo.Context;
 using Core.Mongo.Repository;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,7 @@ namespace TicTacToe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             
             var mongoClient = new MongoClient("mongodb://localhost:27017");
             var context = new Context(mongoClient, "tictactoe");

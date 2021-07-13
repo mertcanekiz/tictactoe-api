@@ -43,9 +43,9 @@ namespace TicTacToe.Controllers
         public IActionResult Create([FromBody] CreateGameRequestDto dto)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty);
-            var createdId = _service.CreateGame(dto, userId);
+            var game = _service.CreateGame(dto, userId);
             return Ok(new CreateGameResponseDto {
-                Id = createdId,
+                Game = game,
                 Success = true
             });
         }
@@ -62,8 +62,7 @@ namespace TicTacToe.Controllers
         [HttpPost("{id:guid}/makeMove")]
         public IActionResult MakeMove([FromRoute] Guid id, [FromBody] MakeMoveRequestDto move)
         {
-            var newState = _service.MakeMove(id, move.X, move.Y,
-                move.Type == "x" ? PieceType.X : PieceType.O);
+            var newState = _service.MakeMove(id, move.X, move.Y);
             return Ok(newState);
         }
     }

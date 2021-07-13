@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using TicTacToe.Domain.DTO.Request;
 using TicTacToe.Domain.Game;
 using TicTacToe.Domain.Game.States;
+using TicTacToe.Domain.Game.WinConditions;
 using TicTacToe.Exceptions;
 using TicTacToe.Factory;
 using TicTacToe.Factory.Board;
@@ -25,7 +26,7 @@ namespace TicTacToe.Services
             _logger = logger;
         }
 
-        public Guid CreateGame(CreateGameRequestDto dto, Guid userId)
+        public Game CreateGame(CreateGameRequestDto dto, Guid userId)
         {
             var winConditionCheckers = dto.WinConditionCheckers
                 .Select(WinConditionChecker.GetWinConditionCheckerByName).ToList();
@@ -41,15 +42,16 @@ namespace TicTacToe.Services
                         MoveNumber = 0
                     }
                 },
-                IsWon = false,
                 WinConditionCheckers = winConditionCheckers,
                 State = GameState.GetGameStateByName(dto.InitialState)
             };
+            game.CheckWinConditions();
             var createdGameId = _repository.InsertOne(game);
-            return createdGameId;
+            game.Id = createdGameId;
+            return game;
         }
 
-        public Move MakeMove(Guid gameId, int x, int y, PieceType type)
+        public Move MakeMove(Guid gameId, int x, int y)
         {
             var game = _repository.FindById(gameId);
 
@@ -60,8 +62,7 @@ namespace TicTacToe.Services
 
             _repository.UpdateOne(g => g.Id.Equals(gameId), 
                 (g => g.Moves, game.Moves),
-                (g => g.Winner, game.Winner),
-                (g => g.IsWon, game.IsWon),
+                (g => g.WinCondition, game.WinCondition),
                 (g => g.State, game.State));
 
             return game.Moves.Last();

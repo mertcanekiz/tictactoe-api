@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TicTacToe.Domain.Game;
+using TicTacToe.Domain.Game.WinConditions;
 
 namespace TicTacToe.Domain.DTO.Response
 {
@@ -13,8 +14,7 @@ namespace TicTacToe.Domain.DTO.Response
     public class GameResponseDto : DocumentResponseDto
     {
         public List<MoveResponseModel> Moves { get; set; }
-        public bool IsWon { get; set; }
-        public PieceType? Winner { get; set; }
+        public WinCondition WinCondition { get; set; }
         public string State { get; set; }
 
         private string[] BoardLineRepresentation(PieceType[][] tiles)
@@ -50,8 +50,7 @@ namespace TicTacToe.Domain.DTO.Response
                 Board = BoardLineRepresentation(x.Board.Tiles),
                 MoveNumber = x.MoveNumber
             }).ToList();
-            IsWon = game.IsWon;
-            Winner = game.Winner;
+            WinCondition = game.WinCondition;
             State = game.State.Name;
         }
     }

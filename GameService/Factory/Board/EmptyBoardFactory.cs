@@ -33,6 +33,6 @@ namespace TicTacToe.Factory.Board
             };
         }
 
-        protected override string Name => "empty";
+        public override string Name => "empty";
     }
 }
