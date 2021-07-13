@@ -10,5 +10,6 @@ namespace TicTacToe.Services
         Guid CreateUser(RegisterRequestDto dto);
         string Authenticate(LoginRequestDto dto);
         List<User> GetAllUsers();
+        User GetUserById(Guid id);
     }
 }

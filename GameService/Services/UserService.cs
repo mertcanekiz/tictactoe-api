@@ -69,5 +69,10 @@ namespace TicTacToe.Services
         {
             return _repository.FindAll();
         }
+
+        public User GetUserById(Guid id)
+        {
+            return _repository.FindOne(x => x.Id.Equals(id));
+        }
     }
 }

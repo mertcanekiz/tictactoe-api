@@ -17,10 +17,9 @@ namespace TicTacToe.Domain.Game
 
         public void CheckWinConditions()
         {
-            WinCondition condition = null;
             foreach (var checker in WinConditionCheckers)
             {
-                condition = checker.Check(Moves.Last().Board);
+                var condition = checker.Check(Moves.Last().Board);
                 if (condition.IsTied && (!WinCondition?.IsWon ?? true))
                 {
                     WinCondition = condition;

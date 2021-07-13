@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using TicTacToe.Domain.DTO.Request;
 using TicTacToe.Domain.DTO.Response;
 using TicTacToe.Services;
@@ -20,7 +22,17 @@ namespace TicTacToe.Controllers
         public IActionResult Register([FromBody] RegisterRequestDto dto)
         {
             var createdUserId = _service.CreateUser(dto);
-            return Ok(new RegisterUserResponseDto(createdUserId));
+            var token = _service.Authenticate(new LoginRequestDto()
+            {
+                Username = dto.Username,
+                Password = dto.Password
+            });
+            return Ok(new RegisterUserResponseDto
+            {
+                Id = createdUserId,
+                Success = true,
+                Token = token
+            });
         }
 
         [HttpPost("login")]
@@ -30,6 +42,14 @@ namespace TicTacToe.Controllers
             if (token == null)
                 return Unauthorized();
             return Ok(new {token});
+        }
+
+        [HttpGet("user")]
+        public IActionResult UserDetails()
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty);
+            var user = _service.GetUserById(userId);
+            return Ok(new UserDetailsResponseDto { Id = userId, Username = user.Username });
         }
     }
 }
