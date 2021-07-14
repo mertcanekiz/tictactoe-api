@@ -1,12 +1,10 @@
 ﻿using System;
-using Core.Mongo;
 
 namespace TicTacToe.Domain.Game
 {
-    public class Player : Document
+    public class Player
     {
-        public Guid UserId { get; set; }
-        public string Name { get; set; }
-        public PieceType Type { get; set; }
+        public Guid? Id { get; set; }
+        public PieceType PieceType { get; set; }
     }
 }

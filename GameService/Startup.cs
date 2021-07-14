@@ -15,7 +15,6 @@ using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using TicTacToe.Domain.Game;
 using TicTacToe.Domain.User;
-using TicTacToe.Factory;
 using TicTacToe.Services;
 
 namespace TicTacToe
@@ -70,7 +69,31 @@ namespace TicTacToe
             services.AddSingleton<IRepository<User>, Repository<User>>();
             services.AddSingleton<IGameService, GameService>();
             services.AddSingleton<IUserService, UserService>();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "GameService", Version = "v1"}); });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "GameService", Version = "v1"});
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        System.Array.Empty<string>()
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

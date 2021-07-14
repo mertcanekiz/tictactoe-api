@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService", "GameService\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{3D18D6B4-5CC3-42FE-8D2C-5DD600C6BE6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService.Tests", "GameService.Tests\GameService.Tests.csproj", "{0BB93F76-BEAC-4FA5-9DA7-0C3CF529B755}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{3D18D6B4-5CC3-42FE-8D2C-5DD600C6BE6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D18D6B4-5CC3-42FE-8D2C-5DD600C6BE6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D18D6B4-5CC3-42FE-8D2C-5DD600C6BE6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BB93F76-BEAC-4FA5-9DA7-0C3CF529B755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BB93F76-BEAC-4FA5-9DA7-0C3CF529B755}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BB93F76-BEAC-4FA5-9DA7-0C3CF529B755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BB93F76-BEAC-4FA5-9DA7-0C3CF529B755}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -9,17 +9,17 @@
             var winner = PieceType.Empty;
             for (int i = 0; i < board.Tiles.Length; i++)
             {
-                if (board.Tiles[i][0] == PieceType.X &&
-                    board.Tiles[i][1] == PieceType.X &&
-                    board.Tiles[i][2] == PieceType.X)
+                if (board.Tiles[i][0].PieceType == PieceType.X &&
+                    board.Tiles[i][1].PieceType == PieceType.X &&
+                    board.Tiles[i][2].PieceType == PieceType.X)
                 {
                     winner = PieceType.X;
                     break;
                 }
 
-                if (board.Tiles[i][0] == PieceType.O &&
-                    board.Tiles[i][1] == PieceType.O &&
-                    board.Tiles[i][2] == PieceType.O)
+                if (board.Tiles[i][0].PieceType == PieceType.O &&
+                    board.Tiles[i][1].PieceType == PieceType.O &&
+                    board.Tiles[i][2].PieceType == PieceType.O)
                 {
                     winner = PieceType.O;
                     break;

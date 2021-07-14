@@ -45,7 +45,7 @@ namespace TicTacToe.Controllers
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty);
             var game = _service.CreateGame(dto, userId);
             return Ok(new CreateGameResponseDto {
-                Game = game,
+                Game = new GameResponseDto(game),
                 Success = true
             });
         }
@@ -62,8 +62,17 @@ namespace TicTacToe.Controllers
         [HttpPost("{id:guid}/makeMove")]
         public IActionResult MakeMove([FromRoute] Guid id, [FromBody] MakeMoveRequestDto move)
         {
-            var newState = _service.MakeMove(id, move.X, move.Y);
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty);
+            var newState = _service.MakeMove(id, userId, move.X, move.Y);
             return Ok(newState);
+        }
+
+        [HttpPost("{id:guid}/join")]
+        public IActionResult Join([FromRoute] Guid id)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty);
+            _service.JoinGame(id, userId);
+            return Ok();
         }
     }
 }

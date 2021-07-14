@@ -11,17 +11,17 @@ namespace TicTacToe.Domain.Game.WinConditions
             var winner = PieceType.Empty;
             for (int i = 0; i < board.Tiles[0].Length; i++)
             {
-                if (board.Tiles[0][i] == PieceType.X &&
-                    board.Tiles[1][i] == PieceType.X &&
-                    board.Tiles[2][i] == PieceType.X)
+                if (board.Tiles[0][i].PieceType == PieceType.X &&
+                    board.Tiles[1][i].PieceType == PieceType.X &&
+                    board.Tiles[2][i].PieceType == PieceType.X)
                 {
                     winner = PieceType.X;
                     break;
                 }
 
-                if (board.Tiles[0][i] == PieceType.O &&
-                    board.Tiles[1][i] == PieceType.O &&
-                    board.Tiles[2][i] == PieceType.O)
+                if (board.Tiles[0][i].PieceType == PieceType.O &&
+                    board.Tiles[1][i].PieceType == PieceType.O &&
+                    board.Tiles[2][i].PieceType == PieceType.O)
                 {
                     winner = PieceType.O;
                     break;

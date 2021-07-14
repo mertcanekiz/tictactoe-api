@@ -8,7 +8,7 @@ namespace TicTacToe.Domain.Game.WinConditions
 
         public override WinCondition Check(Board board)
         {
-            var boardFull = board.Tiles.All(x => x.All(y => y != PieceType.Empty));
+            var boardFull = board.Tiles.All(x => x.All(y => y.PieceType != PieceType.Empty));
             return new WinCondition()
             {
                 IsTied = boardFull,

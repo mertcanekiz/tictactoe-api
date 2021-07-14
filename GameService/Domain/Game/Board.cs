@@ -1,13 +1,18 @@
-﻿namespace TicTacToe.Domain.Game
+﻿using System.Linq;
+
+namespace TicTacToe.Domain.Game
 {
     public class Board
     {
-        public PieceType[][] Tiles { get; set; }
-    }
+        public Tile[][] Tiles { get; set; }
 
-    public class Piece
-    {
-        public PieceType Type { get; set; }
+        public Board Clone()
+        {
+            return new Board()
+            {
+                Tiles = Tiles.Select(x => x.ToArray()).ToArray()
+            };
+        }
     }
 
     public enum PieceType

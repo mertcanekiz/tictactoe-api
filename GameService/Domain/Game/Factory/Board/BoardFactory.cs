@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace TicTacToe.Factory.Board
+namespace TicTacToe.Domain.Game.Factory.Board
 {
     [BsonDiscriminator(Required = true)]
     [BsonKnownTypes(typeof(EmptyBoardFactory))]
